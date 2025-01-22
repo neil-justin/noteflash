@@ -1,10 +1,6 @@
-import express from 'express';
+import app from './index.ts';
 import { PORT } from './util/config';
 import connectToDB from './util/db';
-
-const app = express();
-
-app.use(express.json());
 
 const startServer = async () => {
   await connectToDB();
