@@ -14,16 +14,8 @@ const registerUser = async (
         req.body
       );
       res.json(registeredUser);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        next({
-          name: error.name,
-          message: JSON.stringify({
-            statusCode: 409,
-            errorMessage: error.message,
-          }),
-        });
-      }
+    } catch (error) {
+      next(error);
     }
   }
 };

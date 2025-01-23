@@ -1,4 +1,5 @@
 // import User from '../models/user';
+import { MongooseError } from 'mongoose';
 import User from '../models/user';
 import { UserCredentials } from '../types';
 import { sendEmailVerification } from '../util/helper';
@@ -9,7 +10,7 @@ const registerUser = async (host: string, userCredentials: UserCredentials) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    throw new Error(
+    throw new MongooseError(
       'This account already exists in our database. Please sign in instead.'
     );
   }
