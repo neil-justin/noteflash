@@ -17,8 +17,7 @@ const sendEmailVerification = async (email: string, host: string) => {
     {
       email: email,
     },
-    SECRET,
-    { expiresIn: '1h' }
+    SECRET
   );
   const verificationUrl = `http://${host}/api/account-verification?token=${token}`;
   const mailOptions = {
