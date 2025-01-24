@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserCredentials } from '../types';
+import { UserCredential } from '../types';
 import userService from '../services/userService';
 
 const registerUser = async (
-  req: Request<unknown, unknown, UserCredentials>,
+  req: Request<unknown, unknown, UserCredential>,
   res: Response,
   next: NextFunction
 ) => {

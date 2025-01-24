@@ -1,24 +1,28 @@
 // import User from '../models/user';
 import { MongooseError } from 'mongoose';
 import User from '../models/user';
-import { UserCredentials } from '../types';
-import { sendEmailVerification } from '../util/helper';
+import { UserCredential } from '../types';
 import bcrypt from 'bcrypt';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+} from 'firebase/auth';
 
-const registerUser = async (host: string, userCredentials: UserCredentials) => {
-  const { email, password } = userCredentials;
-  const existingUser = await User.findOne({ email });
+const registerUser = async (host: string, userCredential: UserCredential) => {
+  const { email, password } = userCredential;
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
-  if (existingUser) {
+  if (currentUser) {
     throw new MongooseError(
       'This account already exists in our database. Please sign in instead.'
     );
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  await sendEmailVerification(email, host);
-  const newUser = new User({ email, hashedPassword });
-  return await newUser.save();
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  await sendEmailVerification(user);
+  return user;
 };
 
 export default { registerUser };

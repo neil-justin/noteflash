@@ -1,7 +1,7 @@
-interface UserCredentials {
+interface UserCredential {
   email: string;
   password: string;
   isVerified: boolean;
 }
 
-export { UserCredentials };
+export { UserCredential };
