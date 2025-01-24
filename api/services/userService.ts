@@ -1,8 +1,6 @@
 // import User from '../models/user';
 import { MongooseError } from 'mongoose';
-import User from '../models/user';
 import { UserCredential } from '../types';
-import bcrypt from 'bcrypt';
 import {
   createUserWithEmailAndPassword,
   getAuth,
