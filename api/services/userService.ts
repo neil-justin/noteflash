@@ -5,7 +5,9 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
+  validatePassword,
 } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 const registerUser = async (host: string, userCredential: UserCredential) => {
   const { email, password } = userCredential;
@@ -18,9 +20,19 @@ const registerUser = async (host: string, userCredential: UserCredential) => {
     );
   }
 
-  const { user } = await createUserWithEmailAndPassword(auth, email, password);
-  await sendEmailVerification(user);
-  return user;
+  const { isValid } = await validatePassword(auth, password);
+
+  if (isValid) {
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    await sendEmailVerification(user);
+    return user;
+  } else {
+    throw new FirebaseError('auth/weak-password', 'Weak user password');
+  }
 };
 
 export default { registerUser };
