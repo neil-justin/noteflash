@@ -4,6 +4,6 @@ import userController from '../controllers/user';
 
 const router = express.Router();
 
-router.post('/', parseNewUser, userController.registerUser);
+router.post('/register', parseNewUser, userController.registerUser);
 
 export default router;
