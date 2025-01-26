@@ -20,4 +20,17 @@ const registerUser = async (
   }
 };
 
-export default { registerUser };
+const signInUser = async (
+  req: Request<unknown, unknown, UserCredential>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const signedInUser = await userService.signInUser(req.body);
+    res.json(signedInUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { registerUser, signInUser };

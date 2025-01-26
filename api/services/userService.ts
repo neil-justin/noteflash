@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
+  signInWithEmailAndPassword,
   validatePassword,
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
@@ -35,4 +36,12 @@ const registerUser = async (host: string, userCredential: UserCredential) => {
   }
 };
 
-export default { registerUser };
+const signInUser = async (userCredential: UserCredential) => {
+  const { email, password } = userCredential;
+  const auth = getAuth();
+
+  // is password is incorrect, this throws an error
+  return await signInWithEmailAndPassword(auth, email, password);
+};
+
+export default { registerUser, signInUser };

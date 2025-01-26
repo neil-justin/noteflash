@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-import { NewUserSchema } from './schema';
+import { UserCredentialSchema } from './schema';
 
-const parseNewUser = async (
+const parseUserCredential = async (
   req: Request,
   _res: Response,
   next: NextFunction
 ) => {
   try {
-    NewUserSchema.parse(req.body);
+    UserCredentialSchema.parse(req.body);
     next();
   } catch (error) {
     next(error);
   }
 };
 
-export { parseNewUser };
+export { parseUserCredential };
