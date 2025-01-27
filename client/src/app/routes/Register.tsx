@@ -5,6 +5,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { registerUser } from '../../services/user';
 import { NavLink, useNavigate } from 'react-router-dom';
+import AlertDisplay from '../../components/AlertDisplay';
 
 interface UserCredentialFormInputs {
   email: string;
@@ -37,36 +38,24 @@ const Register = () => {
   };
   if (mutation.isPending) {
     return (
-      <div className='flex h-screen items-center justify-center'>
-        <p
-          role='alert'
-          className='text-lg'
-        >
-          Registering user...
-        </p>
-      </div>
+      <AlertDisplay
+        textClassName='text-lg'
+        text='Registering user...'
+      />
     );
   } else if (mutation.isError) {
     return (
-      <div className='flex h-screen items-center justify-center'>
-        <p
-          role='alert'
-          className='text-lg text-red-800'
-        >
-          We encountered problem registering user...
-        </p>
-      </div>
+      <AlertDisplay
+        textClassName='text-lg text-red-800'
+        text='We encountered problem registering user...'
+      />
     );
   } else if (mutation.isSuccess) {
     return (
-      <div className='flex h-screen items-center justify-center'>
-        <p
-          role='alert'
-          className='text-lg text-green-800'
-        >
-          User register successfully!
-        </p>
-      </div>
+      <AlertDisplay
+        textClassName='text-lg text-green-800'
+        text='User registered successfully!'
+      />
     );
   } else {
     return (
@@ -136,7 +125,13 @@ const Register = () => {
           </button>
         </form>
         <p>
-          Already have an account? <NavLink to='/signin' className='text-blue-600'>Sign in</NavLink>{' '}
+          Already have an account?{' '}
+          <NavLink
+            to='/signin'
+            className='text-blue-600'
+          >
+            Sign in
+          </NavLink>{' '}
         </p>
       </div>
     );

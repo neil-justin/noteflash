@@ -5,6 +5,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signInUser } from '../../services/user';
 import { NavLink } from 'react-router-dom';
+import AlertDisplay from '../../components/AlertDisplay';
 
 interface UserCredentialFormInputs {
   email: string;
@@ -35,36 +36,24 @@ const Signin = () => {
   };
   if (mutation.isPending) {
     return (
-      <div className='flex h-screen items-center justify-center'>
-        <p
-          role='alert'
-          className='text-lg'
-        >
-          Signing-in user...
-        </p>
-      </div>
+      <AlertDisplay
+        textClassName='text-lg'
+        text='Signing-in user...'
+      />
     );
   } else if (mutation.isError) {
     return (
-      <div className='flex h-screen items-center justify-center'>
-        <p
-          role='alert'
-          className='text-lg text-red-800'
-        >
-          We encountered problem signing-in user...
-        </p>
-      </div>
+      <AlertDisplay
+        textClassName='text-lg text-red-800'
+        text='We encountered problem signing-in user...'
+      />
     );
   } else if (mutation.isSuccess) {
     return (
-      <div className='flex h-screen items-center justify-center'>
-        <p
-          role='alert'
-          className='text-lg text-green-800'
-        >
-          User signed in successfully!
-        </p>
-      </div>
+      <AlertDisplay
+        textClassName='text-lg text-green-800'
+        text='User signed in successfully!'
+      />
     );
   } else {
     return (
