@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { User } from 'firebase/auth';
+import { NavLink } from 'react-router-dom';
 
 const EmailVerificationReminder = () => {
   const queryClient = useQueryClient();
@@ -16,6 +17,15 @@ const EmailVerificationReminder = () => {
             Please check your email and click on the link provided to verify
             your email
           </p>
+          <p>
+            Already verified your account?{' '}
+            <NavLink
+              to='/signin'
+              className='text-blue-600'
+            >
+              Sign in
+            </NavLink>{' '}
+          </p>
         </div>
       </div>
     );
@@ -23,7 +33,9 @@ const EmailVerificationReminder = () => {
 
   return (
     <div className='h-screen w-screen flex justify-center items-center'>
-      <p className='w-fit p-12 text-lg shadow-lg'>This page is not available for visit</p>
+      <p className='w-fit p-12 text-lg shadow-lg'>
+        This page is not available for visit
+      </p>
     </div>
   );
 };

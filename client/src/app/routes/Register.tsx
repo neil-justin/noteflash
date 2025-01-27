@@ -4,7 +4,7 @@ import { userCredentialSchema } from '../../utils/schema';
 import { ErrorMessage } from '@hookform/error-message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { registerUser } from '../../services/user';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 interface UserCredentialFormInputs {
   email: string;
@@ -135,6 +135,9 @@ const Register = () => {
             Register
           </button>
         </form>
+        <p>
+          Already have an account? <NavLink to='/signin' className='text-blue-600'>Sign in</NavLink>{' '}
+        </p>
       </div>
     );
   }

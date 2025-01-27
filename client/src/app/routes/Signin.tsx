@@ -4,6 +4,7 @@ import { userCredentialSchema } from '../../utils/schema';
 import { ErrorMessage } from '@hookform/error-message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signInUser } from '../../services/user';
+import { NavLink } from 'react-router-dom';
 
 interface UserCredentialFormInputs {
   email: string;
@@ -34,7 +35,7 @@ const Signin = () => {
   };
   if (mutation.isPending) {
     return (
-      <div className='flex h-screen items-center justify-center shadow-lg'>
+      <div className='flex h-screen items-center justify-center'>
         <p
           role='alert'
           className='text-lg'
@@ -45,7 +46,7 @@ const Signin = () => {
     );
   } else if (mutation.isError) {
     return (
-      <div className='flex h-screen items-center justify-center shadow-lg'>
+      <div className='flex h-screen items-center justify-center'>
         <p
           role='alert'
           className='text-lg text-red-800'
@@ -56,7 +57,7 @@ const Signin = () => {
     );
   } else if (mutation.isSuccess) {
     return (
-      <div className='flex h-screen items-center justify-center shadow-lg'>
+      <div className='flex h-screen items-center justify-center'>
         <p
           role='alert'
           className='text-lg text-green-800'
@@ -132,6 +133,15 @@ const Signin = () => {
             Sign-in
           </button>
         </form>
+        <p>
+          Don't have an account?{' '}
+          <NavLink
+            to='/register'
+            className='text-blue-600'
+          >
+            Register
+          </NavLink>{' '}
+        </p>
       </div>
     );
   }
