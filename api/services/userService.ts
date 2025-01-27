@@ -1,6 +1,5 @@
 // import User from '../models/user';
-import { MongooseError } from 'mongoose';
-import { UserCredential } from '../types';
+import { UserCredential } from '../../shared-types';
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -16,8 +15,8 @@ const registerUser = async (host: string, userCredential: UserCredential) => {
   const currentUser = auth.currentUser;
 
   if (currentUser) {
-    throw new MongooseError(
-      'This account already exists in our database. Please sign in instead.'
+    throw new FirebaseError(
+     'auth/email-already-exists',  'This account already exists in our database. Please sign in instead.'
     );
   }
 

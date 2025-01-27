@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserCredential } from '../types';
+import { UserCredential } from '../../shared-types';
 import userService from '../services/userService';
 
 const registerUser = async (

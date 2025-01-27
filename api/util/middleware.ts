@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { FirebaseError } from 'firebase/app';
-import { MongooseError } from 'mongoose';
 import { z } from 'zod';
 
 // error handler should have these 4 parameters. else it wouln't work as expected
@@ -12,10 +11,12 @@ const errorHandler = (
 ) => {
   if (error instanceof z.ZodError) {
     res.status(400).send(error);
-  } else if (error instanceof MongooseError) {
-    res.status(409).send({ name: error.name, message: error.message });
   } else if (error instanceof FirebaseError) {
-    res.status(403).send(error);
+    if (error.code === 'auth/email-already-exists') {
+      res.status(409).send(error);
+    } else if (error.code === 'auth/weak-password') {
+      res.status(403).send(error);
+    }
   }
 };
 

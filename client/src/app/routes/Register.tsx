@@ -1,0 +1,108 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { userCredentialSchema } from '../../utils/schema';
+import { ErrorMessage } from '@hookform/error-message';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { registerUser } from '../../services/user';
+import { useNavigate } from 'react-router-dom';
+
+interface UserCredentialFormInputs {
+  email: string;
+  password: string;
+}
+
+const Register = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserCredentialFormInputs>({
+    resolver: yupResolver(userCredentialSchema),
+  });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({ mutationFn: registerUser });
+
+  const onFormSubmit: SubmitHandler<UserCredentialFormInputs> = (
+    data,
+    event
+  ) => {
+    event?.preventDefault();
+    mutation.mutate(data, {
+      onSuccess: async (data) => {
+        queryClient.setQueryData(['user'], data);
+        navigate('/email-verification-reminder');
+      },
+    });
+  };
+  return (
+    <div className='flex flex-col justify-center items-center h-screen gap-4'>
+      <h1 className='text-3xl font-bold'>Register</h1>
+      <form
+        onSubmit={handleSubmit(onFormSubmit)}
+        className='flex flex-col gap-5'
+      >
+        <label
+          htmlFor='email'
+          className='text-base flex flex-col gap-1'
+        >
+          Email
+          <input
+            {...register('email')}
+            type='email'
+            name='email'
+            id='email'
+            placeholder='Enter your email'
+            className='text-lg outline-1 outline-gray-400 rounded-sm w-80 p-1.5 border-2 border-transparent focus:border-blue-300'
+          />
+          <ErrorMessage
+            errors={errors}
+            name='email'
+            render={() => (
+              <p
+                role='alert'
+                className='text-red-800 text-base'
+              >
+                {errors.email?.message}
+              </p>
+            )}
+          />
+        </label>
+        <label
+          htmlFor='password'
+          className='text-base flex flex-col gap-1'
+        >
+          Password
+          <input
+            {...register('password')}
+            type='password'
+            name='password'
+            id='password'
+            placeholder='Enter your password'
+            className='text-lg outline-1 outline-gray-400 rounded-sm w-80 p-1.5 border-2 border-transparent focus:border-blue-300'
+          />
+          <ErrorMessage
+            errors={errors}
+            name='password'
+            render={() => (
+              <p
+                role='alert'
+                className='text-red-800 text-base'
+              >
+                {errors.password?.message}
+              </p>
+            )}
+          />
+        </label>
+        <button
+          type='submit'
+          className='w-80 text-lg self-center p-2 bg-blue-500 text-white rounded-sm hover:bg-blue-600 hover:cursor-pointer'
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Register;
