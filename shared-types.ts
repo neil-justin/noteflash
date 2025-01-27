@@ -3,4 +3,4 @@ interface UserCredential {
   password: string;
 }
 
-export { UserCredential };
+export type { UserCredential };
