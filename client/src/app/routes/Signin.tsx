@@ -34,7 +34,7 @@ const Signin = () => {
   };
   if (mutation.isPending) {
     return (
-      <div className='flex h-screen items-center justify-center'>
+      <div className='flex h-screen items-center justify-center shadow-lg'>
         <p
           role='alert'
           className='text-lg'
@@ -45,7 +45,7 @@ const Signin = () => {
     );
   } else if (mutation.isError) {
     return (
-      <div className='flex h-screen items-center justify-center'>
+      <div className='flex h-screen items-center justify-center shadow-lg'>
         <p
           role='alert'
           className='text-lg text-red-800'
@@ -56,7 +56,7 @@ const Signin = () => {
     );
   } else if (mutation.isSuccess) {
     return (
-      <div className='flex h-screen items-center justify-center'>
+      <div className='flex h-screen items-center justify-center shadow-lg'>
         <p
           role='alert'
           className='text-lg text-green-800'

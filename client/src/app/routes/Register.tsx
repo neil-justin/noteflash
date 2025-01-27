@@ -57,6 +57,17 @@ const Register = () => {
         </p>
       </div>
     );
+  } else if (mutation.isSuccess) {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <p
+          role='alert'
+          className='text-lg text-green-800'
+        >
+          User register successfully!
+        </p>
+      </div>
+    );
   } else {
     return (
       <div className='flex flex-col justify-center items-center h-screen gap-4'>
