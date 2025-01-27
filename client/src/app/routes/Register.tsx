@@ -61,7 +61,7 @@ const Register = () => {
         <h1 className='text-3xl font-bold'>Register</h1>
         <UserCredentialForm
           onSubmit={handleSubmit(onFormSubmit)}
-          className='flex flex-col gap-5'
+          className='flex flex-col gap-8'
         >
           <TextField
             fieldName='email'
