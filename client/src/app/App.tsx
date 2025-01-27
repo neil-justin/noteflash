@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './routes/Register';
 import { EmailVerificationReminder } from './routes/EmailVerificationReminder';
+import Signin from './routes/Signin';
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
           <Route
             path='/email-verification-reminder'
             element={<EmailVerificationReminder />}
+          />
+          <Route
+            path='/signin'
+            element={<Signin />}
           />
         </Routes>
       </Router>

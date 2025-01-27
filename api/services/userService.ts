@@ -16,7 +16,8 @@ const registerUser = async (host: string, userCredential: UserCredential) => {
 
   if (currentUser) {
     throw new FirebaseError(
-     'auth/email-already-exists',  'This account already exists in our database. Please sign in instead.'
+      'auth/email-already-exists',
+      'This account already exists in our database. Please sign in instead.'
     );
   }
 
@@ -40,7 +41,7 @@ const signInUser = async (userCredential: UserCredential) => {
   const auth = getAuth();
 
   // is password is incorrect, this throws an error
-  return await signInWithEmailAndPassword(auth, email, password);
+  return (await signInWithEmailAndPassword(auth, email, password)).user;
 };
 
 export default { registerUser, signInUser };

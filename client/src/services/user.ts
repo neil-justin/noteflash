@@ -8,4 +8,8 @@ const registerUser = async (userCredential: UserCredential): Promise<User> => {
   return (await axios.post(`${baseUrl}/register`, userCredential)).data;
 };
 
-export { registerUser };
+const signInUser = async (userCredential: UserCredential): Promise<User> => {
+  return (await axios.post(`${baseUrl}/signin`, userCredential)).data;
+};
+
+export { registerUser, signInUser };
