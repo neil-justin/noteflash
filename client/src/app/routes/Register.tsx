@@ -6,9 +6,9 @@ import { registerUser } from '../../services/user';
 import { NavLink, useNavigate } from 'react-router-dom';
 import AlertDisplay from '../../components/AlertDisplay';
 import { UserCredentialFormInputs } from '../../types';
-import TextField from '../../components/userCredentialForm/TextField';
-import SubmitButton from '../../components/userCredentialForm/SubmitButton';
-import UserCredentialForm from '../../components/userCredentialForm/UserCredentialForm';
+import TextField from '../../components/UserCredentialForm/TextField';
+import SubmitButton from '../../components/UserCredentialForm/SubmitButton';
+import UserCredentialForm from '../../components/UserCredentialForm/UserCredentialForm';
 
 const Register = () => {
   const {
