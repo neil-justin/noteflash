@@ -9,6 +9,7 @@ const AlertDisplay = ({ textClassName, text }: AlertDisplayProps) => {
       <p
         role='alert'
         className={textClassName}
+        data-testid='alertDisplay'
       >
         {text}
       </p>

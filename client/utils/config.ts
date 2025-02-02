@@ -1,0 +1,4 @@
+const SAMPLE_VALID_EMAIL = process.env.SAMPLE_VALID_EMAIL as string;
+const SAMPLE_VALID_PASSWORD = process.env.SAMPLE_VALID_PASSWORD as string;
+
+export { SAMPLE_VALID_EMAIL, SAMPLE_VALID_PASSWORD };
