@@ -4,7 +4,6 @@ import { userCredentialSchema } from '../../utils/schema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { registerUser } from '../../services/user';
 import { NavLink, useNavigate } from 'react-router-dom';
-import AlertDisplay from '../../components/AlertDisplay';
 import { UserCredentialFormInputs } from '../../types';
 import TextField from '../../components/UserCredentialForm/TextField';
 import SubmitButton from '../../components/UserCredentialForm/SubmitButton';
@@ -33,24 +32,32 @@ const Register = () => {
   };
   if (mutation.isPending) {
     return (
-      <AlertDisplay
-        textClassName='text-lg'
-        text='Registering user...'
-      />
+      <div
+        role='alert'
+        className='alert alert-info alert-soft'
+      >
+        <span className='text-base'>Registering user... Please wait.</span>
+      </div>
     );
   } else if (mutation.isError) {
     return (
-      <AlertDisplay
-        textClassName='text-lg text-red-800'
-        text='We encountered problem registering user...'
-      />
+      <div
+        role='alert'
+        className='alert alert-error alert-soft'
+      >
+        <span className='text-base'>
+          We encountered problem registering user... Please try again.
+        </span>
+      </div>
     );
   } else if (mutation.isSuccess) {
     return (
-      <AlertDisplay
-        textClassName='text-lg text-green-800'
-        text='User registered successfully!'
-      />
+      <div
+        role='alert'
+        className='alert alert-success alert-soft'
+      >
+        <span className='text-base'>User registered successfully!</span>
+      </div>
     );
   } else {
     return (

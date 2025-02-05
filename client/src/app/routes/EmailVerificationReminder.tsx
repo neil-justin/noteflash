@@ -21,7 +21,7 @@ const EmailVerificationReminder = () => {
             Already verified your account?{' '}
             <NavLink
               to='/signin'
-              className='text-blue-600'
+              className='text-primary'
             >
               Sign in
             </NavLink>{' '}

@@ -4,7 +4,6 @@ import { userCredentialSchema } from '../../utils/schema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signInUser } from '../../services/user';
 import { NavLink } from 'react-router-dom';
-import AlertDisplay from '../../components/AlertDisplay';
 import { UserCredentialFormInputs } from '../../types';
 import TextField from '../../components/UserCredentialForm/TextField';
 import SubmitButton from '../../components/UserCredentialForm/SubmitButton';
@@ -34,24 +33,32 @@ const Signin = () => {
   };
   if (mutation.isPending) {
     return (
-      <AlertDisplay
-        textClassName='text-lg'
-        text='Signing-in user...'
-      />
+      <div
+        role='alert'
+        className='alert alert-info alert-soft'
+      >
+        <span className='text-base'>Signing in user... Please wait.</span>
+      </div>
     );
   } else if (mutation.isError) {
     return (
-      <AlertDisplay
-        textClassName='text-lg text-red-800'
-        text='We encountered problem signing-in user...'
-      />
+      <div
+        role='alert'
+        className='alert alert-error alert-soft'
+      >
+        <span className='text-base'>
+          We encountered problem signing in user... Please try again.
+        </span>
+      </div>
     );
   } else if (mutation.isSuccess) {
     return (
-      <AlertDisplay
-        textClassName='text-lg text-green-800'
-        text='User signed in successfully!'
-      />
+      <div
+        role='alert'
+        className='alert alert-success alert-soft'
+      >
+        <span className='text-base'>User signed in successfully!</span>
+      </div>
     );
   } else {
     return (
