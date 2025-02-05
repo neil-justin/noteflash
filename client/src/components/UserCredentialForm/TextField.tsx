@@ -1,43 +1,58 @@
-import { ErrorMessage } from '@hookform/error-message';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 import { UserCredentialFormInputs } from '../../types';
 
 interface TextFieldProps {
-  fieldName: 'email' | 'password';
+  title: 'email' | 'password';
   register: UseFormRegister<UserCredentialFormInputs>;
-  errors: FieldErrors<UserCredentialFormInputs>;
 }
 
-const TextField = ({ fieldName, register, errors }: TextFieldProps) => {
-  return (
-    <label
-      htmlFor={fieldName}
-      className='text-base flex flex-col gap-1'
-    >
-      {/* Capitalize the first letter */}
-      {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}
-      <input
-        {...register(fieldName)}
-        type={fieldName}
-        name={fieldName}
-        id={fieldName}
-        placeholder={`Enter your ${fieldName}`}
-        className='text-lg outline-1 outline-gray-400 rounded-sm w-80 p-1.5 border-2 border-transparent focus:border-blue-300'
-      />
-      <ErrorMessage
-        errors={errors}
-        name={fieldName}
-        render={() => (
-          <p
-            role='alert'
-            className='text-red-800 text-base'
-          >
-            {errors[fieldName]?.message}
-          </p>
-        )}
-      />
-    </label>
-  );
+const TextField = ({ title, register }: TextFieldProps) => {
+  switch (title) {
+    case 'email':
+      return (
+        <fieldset className='fieldset text-base'>
+          <legend className='fieldset-legend'>Email</legend>
+          <input
+            {...register('email')}
+            type='email'
+            className='input validator'
+            required
+            placeholder='johndoe@gmail.com'
+          />
+          <div className='validator-hint hidden text-sm'>
+            Enter valid email address
+          </div>
+        </fieldset>
+      );
+    case 'password':
+      return (
+        <fieldset className='fieldset text-base'>
+          <legend className='fieldset-legend'>Password</legend>
+          <input
+            {...register('password')}
+            type='password'
+            className='input validator'
+            required
+            placeholder='********'
+            minLength={8}
+            pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s]).{8,}'
+          />
+          <p className='validator-hint hidden text-sm'>
+            Must be more than 8 characters, including
+            <br />
+            At least one number
+            <br />
+            At least one lowercase letter
+            <br />
+            At least one uppercase letter
+            <br />
+            At least one special character
+          </p>{' '}
+        </fieldset>
+      );
+    default:
+      return <></>;
+  }
 };
 
 export default TextField;

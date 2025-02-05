@@ -9,12 +9,12 @@ import { UserCredentialFormInputs } from '../../types';
 import TextField from '../../components/UserCredentialForm/TextField';
 import SubmitButton from '../../components/UserCredentialForm/SubmitButton';
 import UserCredentialForm from '../../components/UserCredentialForm/UserCredentialForm';
+import Header from '../../components/UserCredentialForm/Header';
 
 const Signin = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
   } = useForm<UserCredentialFormInputs>({
     resolver: yupResolver(userCredentialSchema),
   });
@@ -55,30 +55,27 @@ const Signin = () => {
     );
   } else {
     return (
-      <div className='flex flex-col justify-center items-center h-screen gap-4'>
-        <h1 className='text-3xl font-bold'>Sign In</h1>
+      <div className='flex flex-col justify-center items-center h-screen gap-5'>
         <UserCredentialForm
           onSubmit={handleSubmit(onFormSubmit)}
-          className='flex flex-col gap-8'
+          className='flex flex-col gap-6 max-w-xs w-full'
         >
-          {' '}
+          <Header>Sign in to your account</Header>
           <TextField
-            fieldName='email'
+            title='email'
             register={register}
-            errors={errors}
           />
           <TextField
-            fieldName='password'
+            title='password'
             register={register}
-            errors={errors}
           />
-          <SubmitButton text='Sign in' />
+          <SubmitButton>Sign in</SubmitButton>
         </UserCredentialForm>
         <p>
-          Don't have an account?{' '}
+          Don't have an account yet?{' '}
           <NavLink
             to='/register'
-            className='text-blue-600'
+            className='text-primary hover:underline'
           >
             Register
           </NavLink>{' '}
