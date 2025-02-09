@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { userCredentialSchema } from '../../utils/schema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signInUser } from '../../services/user';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCredentialFormInputs } from '../../types';
 import TextField from '../../components/UserCredentialForm/TextField';
 import SubmitButton from '../../components/UserCredentialForm/SubmitButton';
@@ -11,12 +11,10 @@ import UserCredentialForm from '../../components/UserCredentialForm/UserCredenti
 import Header from '../../components/UserCredentialForm/Header';
 
 const Signin = () => {
-  const {
-    handleSubmit,
-    register,
-  } = useForm<UserCredentialFormInputs>({
+  const { handleSubmit, register } = useForm<UserCredentialFormInputs>({
     resolver: yupResolver(userCredentialSchema),
   });
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const mutation = useMutation({ mutationFn: signInUser });
 
@@ -28,6 +26,7 @@ const Signin = () => {
     mutation.mutate(data, {
       onSuccess: async (data) => {
         queryClient.setQueryData(['user'], data);
+        navigate('/all-notes');
       },
     });
   };

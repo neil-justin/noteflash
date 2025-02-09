@@ -3,4 +3,6 @@ interface UserCredentialFormInputs {
   password: string;
 }
 
-export type { UserCredentialFormInputs };
+type NavItemTitle = 'All Notes' | 'Archive' | 'Trash' | 'Sign out';
+
+export type { UserCredentialFormInputs, NavItemTitle };
