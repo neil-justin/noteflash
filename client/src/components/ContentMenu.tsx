@@ -36,7 +36,7 @@ const ContentMenu = ({ children }: ContentMenuProps) => {
           <PencilSquare />
         </span>
       </div>
-      <div className='flex flex-col flex-auto justify-center items-center gap-2 h-screen'>
+      <div className='flex flex-col flex-auto justify-center items-center gap-2 h-full'>
         {children}
       </div>
     </div>

@@ -9,7 +9,7 @@ const AllNotes = () => {
       <AppSidebar />
       <ContentMenu>
         <>
-          <LightBulb size={8} />
+          <LightBulb size={12} />
           <span className='text-sm text-primary hover:cursor-pointer'>
             Create your first note
           </span>

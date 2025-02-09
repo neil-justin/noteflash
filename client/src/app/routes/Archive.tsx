@@ -9,7 +9,7 @@ const Archive = () => {
       <AppSidebar />
       <ContentMenu>
         <>
-          <ArchiveBoxArrowDown size={8} />
+          <ArchiveBoxArrowDown size={12} />
           <span className='text-sm'>Your archive is empty</span>
         </>
       </ContentMenu>

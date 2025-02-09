@@ -9,7 +9,7 @@ const Trash = () => {
       <AppSidebar />
       <ContentMenu>
         <>
-          <TrashIcon size={8} />
+          <TrashIcon size={12} />
           <span className='text-sm'>Your trash is empty</span>
         </>
       </ContentMenu>

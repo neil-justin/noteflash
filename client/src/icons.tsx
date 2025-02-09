@@ -11,7 +11,7 @@ const LightBulb = ({ size }: SvgIconProps) => (
     viewBox='0 0 24 24'
     strokeWidth={1.5}
     stroke='currentColor'
-    className={`size-${size}`}
+    className={'size-' + size}
   >
     <path
       strokeLinecap='round'
@@ -28,7 +28,7 @@ const ArchiveBoxArrowDown = ({ size }: SvgIconProps) => (
     viewBox='0 0 24 24'
     strokeWidth={1.5}
     stroke='currentColor'
-    className={`size-${size}`}
+    className={'size-' + size}
   >
     <path
       strokeLinecap='round'
@@ -45,7 +45,7 @@ const Trash = ({ size }: SvgIconProps) => (
     viewBox='0 0 24 24'
     strokeWidth={1.5}
     stroke='currentColor'
-    className={`size-${size}`}
+    className={'size-' + size}
   >
     <path
       strokeLinecap='round'
