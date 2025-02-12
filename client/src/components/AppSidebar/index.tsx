@@ -1,27 +1,22 @@
-import {
-  ArchiveBoxArrowDown,
-  LightBulb,
-  ArrowRightStartOnRectangle,
-  Trash,
-} from '../../icons';
+import * as Icons from '../../icons';
 import NavItem from './NavItem';
 
 const items = [
   {
     title: 'All Notes' as const,
-    icon: <LightBulb size={6} />,
+    icon: <Icons.LightBulb size={24} />,
   },
   {
     title: 'Archive' as const,
-    icon: <ArchiveBoxArrowDown size={6} />,
+    icon: <Icons.Archive size={24} />,
   },
   {
     title: 'Trash' as const,
-    icon: <Trash size={6} />,
+    icon: <Icons.Delete size={24} />,
   },
   {
     title: 'Sign out' as const,
-    icon: <ArrowRightStartOnRectangle size={6} />,
+    icon: <Icons.Signout size={24} />,
   },
 ];
 

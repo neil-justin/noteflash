@@ -1,9 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import {
-  Bars3,
-  PencilSquare,
-} from '../icons';
 import { NavItemTitle } from '../types';
+import * as Icons from '../icons';
 import { ReactElement, useEffect, useState } from 'react';
 import { pathnameToTitleCase } from '../utils';
 
@@ -25,16 +22,26 @@ const ContentMenu = ({ children }: ContentMenuProps) => {
     <div className='app-drawer-content flex flex-col hover:cursor-auto content-menu'>
       {/* Page content here */}
       <div className='flex justify-between items-center'>
-        <label
-          htmlFor='app-drawer'
-          className='btn btn-ghost drawer-button border-none hover:bg-base-300'
+        <div
+          className='tooltip tooltip-right'
+          data-tip='Main Menu'
         >
-          <Bars3 />
-        </label>
+          <label
+            htmlFor='app-drawer'
+            className='btn btn-ghost drawer-button border-none hover:bg-base-300'
+          >
+            <Icons.Menu size={24} />
+          </label>
+        </div>
         <span className='h-fit'>{selectedItem}</span>
-        <span className='px-4 py-2 h-fit flex items-center hover:bg-base-300 hover:cursor-pointer'>
-          <PencilSquare />
-        </span>
+        <div
+          className='tooltip tooltip-bottom'
+          data-tip='New Note'
+        >
+          <button className='btn btn-ghost hover:bg-base-300 hover:cursor-pointer'>
+            <Icons.NewNote size={24} />
+          </button>
+        </div>
       </div>
       <div className='flex flex-col flex-auto justify-center items-center gap-2 h-full'>
         {children}

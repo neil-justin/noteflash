@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
 @plugin "daisyui" {
   themes: corporate --default, business --prefersdark;
 }
@@ -10,7 +12,16 @@
 }
 
 .content-menu {
-  grid-area: 1 / 1 / 3 / 2;
+  grid-area: 1 / 1 / 4 / 2;
+}
+
+.content-area {
+  grid-area: 1 / 2 / 4 / 3;
+}
+
+/* override prosemirror */
+.ProseMirror-focused {
+  outline: none;
 }
 
 /* reset daisyui drawer behavior */

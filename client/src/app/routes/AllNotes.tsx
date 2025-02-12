@@ -1,7 +1,7 @@
 import AppSidebar from '../../components/AppSidebar/index';
 import ContentArea from '../../components/ContentArea';
 import ContentMenu from '../../components/ContentMenu';
-import { LightBulb } from '../../icons';
+import * as Icons from '../../icons';
 
 const AllNotes = () => {
   return (
@@ -9,7 +9,7 @@ const AllNotes = () => {
       <AppSidebar />
       <ContentMenu>
         <>
-          <LightBulb size={12} />
+          <Icons.LightBulb size={32} />
           <span className='text-sm text-primary hover:cursor-pointer'>
             Create your first note
           </span>
