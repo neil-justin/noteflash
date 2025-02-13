@@ -25,7 +25,8 @@ const Tiptap = () => {
         }
       },
       attributes: {
-        class: 'prose-sm p-20 focus:outline-none h-full max-h-full overflow-y-auto',
+        class:
+          'prose-sm p-20 focus:outline-none h-full max-h-full overflow-y-auto',
       },
     },
     extensions: [
@@ -283,9 +284,32 @@ const Tiptap = () => {
           className='tooltip tooltip-bottom ml-auto'
           data-tip='More Actions'
         >
-          <button className='btn btn-ghost'>
+          {/* <button className='btn btn-ghost'>
             <Icons.MoreActions size={24} />
-          </button>
+          </button> */}
+          <div className='dropdown dropdown-end'>
+            <div
+              tabIndex={0}
+              role='button'
+              className='btn btn-ghost m-1'
+            >
+              <Icons.MoreActions size={24} />
+            </div>
+            <ul
+              tabIndex={0}
+              className='dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 mt-2 shadow-md'
+            >
+              <li>
+                <a>Pin note</a>
+              </li>
+              <li>
+                <a>Archive note</a>
+              </li>
+              <li>
+                <a className='text-error'>Move to trash</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <EditorContent
