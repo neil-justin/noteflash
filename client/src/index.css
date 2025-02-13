@@ -12,11 +12,15 @@
 }
 
 .content-menu {
-  grid-area: 1 / 1 / 4 / 2;
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 .content-area {
-  grid-area: 1 / 2 / 4 / 3;
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.app-sidebar {
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 /* override prosemirror */
@@ -28,4 +32,9 @@
 .menu {
   --menu-active-fg: none;
   --menu-active-bg: none;
+}
+
+div:has(> .tiptap) {
+  max-height: calc(100vh - 40px);
+  height: calc(100vh - 40px);
 }

@@ -25,7 +25,7 @@ const Tiptap = () => {
         }
       },
       attributes: {
-        class: 'prose-sm p-20 focus:outline-none',
+        class: 'prose-sm p-20 focus:outline-none h-full max-h-full overflow-y-auto',
       },
     },
     extensions: [
@@ -132,7 +132,7 @@ const Tiptap = () => {
 
   return (
     <>
-      <div className='flex items-center gap-1 px-5 sticky top-0 left-0 z-10 shadow-sm bg-base-100'>
+      <div className='flex items-center gap-1 px-5 shadow-sm'>
         <div
           className='tooltip tooltip-bottom'
           data-tip='Undo'

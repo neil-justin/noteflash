@@ -19,7 +19,7 @@ const ContentMenu = ({ children }: ContentMenuProps) => {
   }, [location.pathname]);
 
   return (
-    <div className='app-drawer-content flex flex-col hover:cursor-auto content-menu'>
+    <div className='app-drawer-content flex flex-col hover:cursor-auto content-menu sticky top-0'>
       {/* Page content here */}
       <div className='flex justify-between items-center'>
         <div

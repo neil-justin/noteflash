@@ -22,13 +22,13 @@ const items = [
 
 const AppSidebar = () => {
   return (
-    <div className='drawer z-10 w-full'>
+    <div className='drawer w-full app-sidebar'>
       <input
         id='app-drawer'
         type='checkbox'
         className='drawer-toggle'
       />
-      <div className='drawer-side'>
+      <div className='drawer-side z-20'>
         <label
           htmlFor='app-drawer'
           aria-label='close sidebar'
