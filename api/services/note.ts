@@ -10,6 +10,19 @@ import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 
+const getUserNotes = async (): Promise<NoteDoc[]> => {
+  const currentUser = getAuth().currentUser;
+
+  if (!currentUser) {
+    throw new FirebaseError('auth/user-not-found', 'User not found');
+  }
+
+  const user = (await User.findOne({
+    email: currentUser.email,
+  })) as UserDoc;
+  return await Note.find({ userId: user.id });
+};
+
 const createNote = async (note: NoteReqBody): Promise<NoteDoc> => {
   const currentUser = getAuth().currentUser;
 
@@ -29,9 +42,7 @@ const createNote = async (note: NoteReqBody): Promise<NoteDoc> => {
     }),
   };
 
-  console.log('noteFields', noteFields);
-
   return await new Note(noteFields).save();
 };
 
-export default { createNote };
+export default { getUserNotes, createNote };
