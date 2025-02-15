@@ -24,7 +24,7 @@ function App() {
             element={<Signin />}
           />
           <Route
-            path='/all-notes'
+            path='/all-notes/:id?'
             element={<AllNotes />}
           />
           <Route

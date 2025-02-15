@@ -22,6 +22,7 @@
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "axios": "^1.7.9",
+    "change-case": "^5.4.4",
     "classnames": "^2.5.1",
     "firebase": "^11.2.0",
     "just-kebab-case": "^4.2.0",

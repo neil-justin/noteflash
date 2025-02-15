@@ -13,6 +13,7 @@ interface NoteReqBody {
 }
 
 interface NoteDoc extends Document, Omit<NoteReqBody, 'content'> {
+  id: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId;
   content?: Object | null;
   trashedAt?: Date | null;

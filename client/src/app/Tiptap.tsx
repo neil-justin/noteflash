@@ -9,65 +9,78 @@ import { mergeAttributes } from '@tiptap/core';
 import classNames from 'classnames';
 import * as Icons from '../icons';
 import { useEffect, useState } from 'react';
+import { NoteDoc } from '../../../shared-types';
 
-const Tiptap = () => {
-  const editor = useEditor({
-    onUpdate: ({ editor }) => {
-      console.log(editor.getJSON());
-    },
-    editorProps: {
-      handleKeyDown: (_view, event) => {
-        // this would remove all marks when user presses Enter at the end of a line
-        if (event.key === 'Enter') {
-          // editor.commands.unsetAllMarks() doesn't work as expected
-          // below is an alternative
-          editor.isActive('bold') && editor.commands.unsetBold();
-          editor.isActive('italic') && editor.commands.unsetItalic();
-          editor.isActive('underline') && editor.commands.unsetUnderline();
-          editor.isActive('strike') && editor.commands.unsetStrike();
-          editor.isActive('code') && editor.commands.unsetCode();
+interface TiptapProps {
+  activeNote: NoteDoc | null;
+}
+
+const Tiptap = ({ activeNote }: TiptapProps) => {
+  const editor = useEditor(
+    {
+      onCreate({ editor }) {
+        // render note title and content in the editor
+        if (activeNote) {
+          editor.commands.insertContent(`<h1>${activeNote.title}</h1>`);
+          activeNote.content &&
+            editor.commands.insertContent({ ...activeNote.content });
         }
       },
-      attributes: {
-        class:
-          'prose-sm p-20 focus:outline-none h-full max-h-full overflow-y-auto',
+      editorProps: {
+        handleKeyDown: (_view, event) => {
+          // this would remove all marks when user presses Enter at the end of a line
+          if (event.key === 'Enter') {
+            // editor.commands.unsetAllMarks() doesn't work as expected
+            // below is an alternative
+            editor.isActive('bold') && editor.commands.unsetBold();
+            editor.isActive('italic') && editor.commands.unsetItalic();
+            editor.isActive('underline') && editor.commands.unsetUnderline();
+            editor.isActive('strike') && editor.commands.unsetStrike();
+            editor.isActive('code') && editor.commands.unsetCode();
+          }
+        },
+        attributes: {
+          class:
+            'prose-sm p-20 focus:outline-none h-full max-h-full overflow-y-auto',
+        },
       },
-    },
-    extensions: [
-      StarterKit.configure({
-        heading: { levels: [1, 2, 3] },
-        code: {
-          HTMLAttributes: {
-            class:
-              'not-prose font-mono text-[85%] text-[#eb5757] bg-[#87837826] rounded-sm py-2 px-2',
+      extensions: [
+        StarterKit.configure({
+          heading: { levels: [1, 2, 3] },
+          code: {
+            HTMLAttributes: {
+              class:
+                'not-prose font-mono text-[85%] text-[#eb5757] bg-[#87837826] rounded-sm py-2 px-2',
+            },
           },
-        },
-      }),
-      Underline,
-      Link,
-      // Heading configuration for styling different Heading levels with Tailwindcss
-      Heading.extend({
-        levels: [1, 2, 3],
-        renderHTML({ node, HTMLAttributes }) {
-          const level = this.options.levels.includes(node.attrs.level)
-            ? node.attrs.level
-            : this.options.levels[0];
-          const classes: { [index: number]: string } = {
-            1: 'text-3xl',
-            2: 'text-2xl',
-            3: 'text-xl',
-          };
-          return [
-            `h${level}`,
-            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-              class: `${classes[level]}`,
-            }),
-            0,
-          ];
-        },
-      }).configure({ levels: [1, 2, 3] }),
-    ],
-  }) as Editor;
+        }),
+        Underline,
+        Link,
+        // Heading configuration for styling different Heading levels with Tailwindcss
+        Heading.extend({
+          levels: [1, 2, 3],
+          renderHTML({ node, HTMLAttributes }) {
+            const level = this.options.levels.includes(node.attrs.level)
+              ? node.attrs.level
+              : this.options.levels[0];
+            const classes: { [index: number]: string } = {
+              1: 'text-3xl',
+              2: 'text-2xl',
+              3: 'text-xl',
+            };
+            return [
+              `h${level}`,
+              mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+                class: `${classes[level]}`,
+              }),
+              0,
+            ];
+          },
+        }).configure({ levels: [1, 2, 3] }),
+      ],
+    },
+    [activeNote]
+  ) as Editor;
 
   const [menuDropdownText, setMenuDropdownText] = useState('Normal Text');
 

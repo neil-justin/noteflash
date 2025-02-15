@@ -1,22 +1,14 @@
 import { useLocation } from 'react-router-dom';
-import { NavItemTitle } from '../types';
 import * as Icons from '../icons';
-import { ReactElement, useEffect, useState } from 'react';
-import { pathnameToTitleCase } from '../utils';
+import { ReactElement } from 'react';
+import { capitalCase } from 'change-case';
 
 interface ContentMenuProps {
   children: ReactElement;
 }
 
 const ContentMenu = ({ children }: ContentMenuProps) => {
-  const location = useLocation();
-  const [selectedItem, setSelectedItem] = useState<NavItemTitle>(
-    pathnameToTitleCase(location.pathname) as NavItemTitle
-  );
-
-  useEffect(() => {
-    setSelectedItem(pathnameToTitleCase(location.pathname) as NavItemTitle);
-  }, [location.pathname]);
+  const activeMenuItem = capitalCase(useLocation().pathname.split('/')[1]);
 
   return (
     <div className='app-drawer-content flex flex-col hover:cursor-auto content-menu sticky top-0'>
@@ -33,7 +25,7 @@ const ContentMenu = ({ children }: ContentMenuProps) => {
             <Icons.Menu size={24} />
           </label>
         </div>
-        <span className='h-fit'>{selectedItem}</span>
+        <span className='h-fit'>{activeMenuItem}</span>
         <div
           className='tooltip tooltip-bottom'
           data-tip='New Note'
@@ -43,9 +35,7 @@ const ContentMenu = ({ children }: ContentMenuProps) => {
           </button>
         </div>
       </div>
-      <div className='flex flex-col flex-auto justify-center items-center gap-2 h-full'>
-        {children}
-      </div>
+      {children}
     </div>
   );
 };
