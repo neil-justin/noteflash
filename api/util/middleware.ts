@@ -16,7 +16,11 @@ const errorHandler = (
       res.status(409).send(error);
     } else if (error.code === 'auth/weak-password') {
       res.status(403).send(error);
+    } else if (error.code === 'auth/user-not-found') {
+      res.status(403).send(error);
     }
+  } else {
+    res.send(error);
   }
 };
 

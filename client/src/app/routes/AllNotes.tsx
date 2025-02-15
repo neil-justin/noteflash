@@ -2,6 +2,7 @@ import AppSidebar from '../../components/AppSidebar/index';
 import ContentArea from '../../components/ContentArea';
 import ContentMenu from '../../components/ContentMenu';
 import * as Icons from '../../icons';
+import Tiptap from '../Tiptap';
 
 const AllNotes = () => {
   return (
@@ -15,7 +16,9 @@ const AllNotes = () => {
           </span>
         </>
       </ContentMenu>
-      <ContentArea />
+      <ContentArea>
+        <Tiptap />
+      </ContentArea>
     </>
   );
 };

@@ -12,8 +12,12 @@ import { useEffect, useState } from 'react';
 
 const Tiptap = () => {
   const editor = useEditor({
+    onUpdate: ({ editor }) => {
+      console.log(editor.getJSON());
+    },
     editorProps: {
       handleKeyDown: (_view, event) => {
+        // this would remove all marks when user presses Enter at the end of a line
         if (event.key === 'Enter') {
           // editor.commands.unsetAllMarks() doesn't work as expected
           // below is an alternative
@@ -63,7 +67,6 @@ const Tiptap = () => {
         },
       }).configure({ levels: [1, 2, 3] }),
     ],
-    content: '<h1>heading1</h1><h2>heading2</h2><h3>heading3</h3><p>text</p>',
   }) as Editor;
 
   const [menuDropdownText, setMenuDropdownText] = useState('Normal Text');
@@ -116,18 +119,13 @@ const Tiptap = () => {
         );
       }
     };
-    const handleMouseUp = (e: Event) => {
-      console.log(e);
-    };
 
     const editor = document.querySelector('.tiptap');
 
     editor?.addEventListener('mousedown', handleMouseDown);
-    editor?.addEventListener('mouseup', handleMouseUp);
 
     return () => {
       editor?.removeEventListener('mousedown', handleMouseDown);
-      editor?.removeEventListener('mouseup', handleMouseUp);
     };
   }, []);
 

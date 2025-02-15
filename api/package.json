@@ -18,6 +18,10 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@tiptap/extension-document": "^2.11.5",
+    "@tiptap/extension-paragraph": "^2.11.5",
+    "@tiptap/extension-text": "^2.11.5",
+    "@tiptap/html": "^2.11.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "firebase": "^11.2.0",

@@ -8,6 +8,7 @@ import {
   validatePassword,
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+import User from '../models/user';
 
 const registerUser = async (host: string, userCredential: UserCredential) => {
   const { email, password } = userCredential;
@@ -29,6 +30,7 @@ const registerUser = async (host: string, userCredential: UserCredential) => {
       email,
       password
     );
+    await new User({ firebaseAuthUid: user.uid, email }).save();
     await sendEmailVerification(user);
     return user;
   } else {
