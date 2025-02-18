@@ -33,10 +33,6 @@ const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
         const prevNoteContent = activeNote.content
           ? generateHTML(activeNote.content, [StarterKit, Underline, Link])
           : '';
-        // console.log('editor title', noteTitle);
-        // console.log('prev title', activeNote.title);
-        // console.log('noteContent', noteContent);
-        // console.log('prevNoteContent', prevNoteContent);
         const isTitleChanged = activeNote.title !== noteTitle;
         const isContentChanged = prevNoteContent !== noteContent;
         if (isTitleChanged || isContentChanged) {
