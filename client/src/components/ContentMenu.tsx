@@ -1,19 +1,39 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import * as Icons from '../icons';
 import { capitalCase } from 'change-case';
 import classNames from 'classnames';
 import { NoteTitleDoc } from '../../../shared-types';
+import { QueryObserverResult, useMutation } from '@tanstack/react-query';
+import noteService from '../services/note';
+import { NoteDoc } from '../../../shared-types';
 
 interface ContentMenuProps {
   notes: NoteTitleDoc[] | undefined;
   updateNoteId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  refetchTitles: () => Promise<QueryObserverResult<NoteTitleDoc[], Error>>;
 }
 
-const ContentMenu = ({ notes, updateNoteId }: ContentMenuProps) => {
+const ContentMenu = ({
+  notes,
+  updateNoteId,
+  refetchTitles,
+}: ContentMenuProps) => {
   const activeMenuItem = capitalCase(useLocation().pathname.split('/')[1]);
   const activeNoteId = useLocation().pathname.split('/')[2];
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: noteService.createNote,
+    onSuccess(data: NoteDoc) {
+      // this will trigger refetch for 'activeNote' queryKey and displays
+      // content in the editor
+      updateNoteId(data.id.toString());
+      // this will refetch titles to display updated list 
+      refetchTitles();
+      navigate(`/all-notes/${data.id}`);
+    },
+  });
 
-  const handleClick = (
+  const handleNoteClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     noteId: string
   ) => {
@@ -22,6 +42,10 @@ const ContentMenu = ({ notes, updateNoteId }: ContentMenuProps) => {
     }
 
     updateNoteId(noteId);
+  };
+
+  const handleCreateNoteClick = () => {
+    mutation.mutate();
   };
 
   return (
@@ -44,7 +68,10 @@ const ContentMenu = ({ notes, updateNoteId }: ContentMenuProps) => {
           className='tooltip tooltip-bottom'
           data-tip='New Note'
         >
-          <button className='btn btn-ghost hover:bg-base-300 hover:cursor-pointer'>
+          <button
+            onClick={handleCreateNoteClick}
+            className='btn btn-ghost hover:bg-base-300 hover:cursor-pointer'
+          >
             <Icons.NewNote size={24} />
           </button>
         </div>
@@ -54,7 +81,7 @@ const ContentMenu = ({ notes, updateNoteId }: ContentMenuProps) => {
           {notes.map((note) => (
             <li key={note.id.toString()}>
               <NavLink
-                onClick={(e) => handleClick(e, note.id.toString())}
+                onClick={(e) => handleNoteClick(e, note.id.toString())}
                 className={({ isActive }) =>
                   classNames('block p-5 visible', { 'bg-base-200': isActive })
                 }

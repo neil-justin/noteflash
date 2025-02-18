@@ -25,6 +25,7 @@ const AllNotes = () => {
       <ContentMenu
         notes={notes}
         updateNoteId={setNoteId}
+        refetchTitles={refetch}
       />
       <ContentArea
         refetchTitles={refetch}

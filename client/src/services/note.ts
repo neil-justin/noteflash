@@ -22,4 +22,8 @@ const getNoteBy = async (id: string | undefined): Promise<NoteDoc> => {
   return (await axios.get(`${baseUrl}/${id}`)).data;
 };
 
-export default { getManyTitles, updateNote, getNoteBy };
+const createNote = async () => {
+  return (await axios.post(`${baseUrl}/`)).data;
+};
+
+export default { getManyTitles, updateNote, getNoteBy, createNote };
