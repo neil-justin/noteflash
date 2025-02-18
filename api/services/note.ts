@@ -28,19 +28,6 @@ const getNoteBy = async (id: NoteDoc['id']): Promise<NoteDoc> => {
   return (await Note.findById(id)) as NoteDoc;
 };
 
-const getUserNotes = async (): Promise<NoteDoc[]> => {
-  const currentUser = getAuth().currentUser;
-
-  if (!currentUser) {
-    throw new FirebaseError('auth/user-not-found', 'User not found');
-  }
-
-  const user = (await User.findOne({
-    email: currentUser.email,
-  })) as UserDoc;
-  return await Note.find({ userId: user.id });
-};
-
 const createNote = async (note: NoteReqBody): Promise<NoteDoc> => {
   const currentUser = getAuth().currentUser;
 
@@ -102,7 +89,6 @@ const getManyTitles = async (): Promise<NoteTitleDoc[]> => {
 
 export default {
   getNoteBy,
-  getUserNotes,
   createNote,
   updateNote,
   getManyTitles,

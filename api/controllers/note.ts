@@ -22,19 +22,6 @@ const getNoteBy = async (
   }
 };
 
-const getUserNotes = async (
-  req: Request,
-  res: Response<NoteDoc[]>,
-  next: NextFunction
-) => {
-  try {
-    const userNotes = await noteService.getUserNotes();
-    res.json(userNotes);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const createNote = async (
   req: Request<unknown, NoteDoc, NoteReqBody>,
   res: Response<NoteDoc>,
@@ -76,7 +63,6 @@ const getManyTitles = async (
 
 export default {
   getNoteBy,
-  getUserNotes,
   createNote,
   updateNote,
   getManyTitles,

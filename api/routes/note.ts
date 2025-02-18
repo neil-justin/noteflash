@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get('/titles', noteController.getManyTitles)
 router.get('/:id', noteController.getNoteBy)
-router.get('/', noteController.getUserNotes);
 router.post('/', noteController.createNote);
 router.put('/:id', noteController.updateNote);
 

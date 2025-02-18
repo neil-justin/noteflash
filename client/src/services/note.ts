@@ -4,10 +4,6 @@ import mongoose from 'mongoose';
 
 const baseUrl = '/api/notes';
 
-const getUserNotes = async (): Promise<NoteDoc[]> => {
-  return (await axios.get(baseUrl)).data;
-};
-
 const getManyTitles = async (): Promise<NoteTitleDoc[]> => {
   return (await axios.get(`${baseUrl}/titles`)).data;
 };
@@ -26,4 +22,4 @@ const getNoteBy = async (id: string | undefined): Promise<NoteDoc> => {
   return (await axios.get(`${baseUrl}/${id}`)).data;
 };
 
-export default { getUserNotes, getManyTitles, updateNote, getNoteBy };
+export default { getManyTitles, updateNote, getNoteBy };
