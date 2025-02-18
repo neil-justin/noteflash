@@ -1,7 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { NoteDoc, NoteReqBody } from '../../shared-types';
+import {
+  NoteDoc,
+  NoteReqBody,
+  NoteTitleDoc,
+  UpdateNoteReqBody,
+} from '../../shared-types';
 import noteService from '../services/note';
+import mongoose from 'mongoose';
+
+const getNoteBy = async (
+  req: Request<{ id: NoteDoc['id'] }>,
+  res: Response<NoteDoc>,
+  next: NextFunction
+) => {
+  try {
+    const note = await noteService.getNoteBy(req.params.id);
+    res.json(note);
+  } catch (error) {
+    next(error);
+  }
+};
 
 const getUserNotes = async (
   req: Request,
@@ -29,4 +48,36 @@ const createNote = async (
   }
 };
 
-export default { getUserNotes, createNote };
+const updateNote = async (
+  req: Request<{ id: mongoose.Types.ObjectId }, NoteDoc, UpdateNoteReqBody>,
+  res: Response<NoteDoc>,
+  next: NextFunction
+) => {
+  try {
+    const updatedNote = await noteService.updateNote(req.params.id, req.body);
+    res.json(updatedNote);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getManyTitles = async (
+  req: Request,
+  res: Response<NoteTitleDoc[]>,
+  next: NextFunction
+) => {
+  try {
+    const titles = await noteService.getManyTitles();
+    res.json(titles);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default {
+  getNoteBy,
+  getUserNotes,
+  createNote,
+  updateNote,
+  getManyTitles,
+};

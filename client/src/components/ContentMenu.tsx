@@ -1,14 +1,28 @@
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import * as Icons from '../icons';
-import { ReactElement } from 'react';
 import { capitalCase } from 'change-case';
+import classNames from 'classnames';
+import { NoteTitleDoc } from '../../../shared-types';
 
 interface ContentMenuProps {
-  children: ReactElement;
+  notes: NoteTitleDoc[] | undefined;
+  updateNoteId: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const ContentMenu = ({ children }: ContentMenuProps) => {
+const ContentMenu = ({ notes, updateNoteId }: ContentMenuProps) => {
   const activeMenuItem = capitalCase(useLocation().pathname.split('/')[1]);
+  const activeNoteId = useLocation().pathname.split('/')[2];
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    noteId: string
+  ) => {
+    if (noteId === activeNoteId) {
+      return event.preventDefault();
+    }
+
+    updateNoteId(noteId);
+  };
 
   return (
     <div className='app-drawer-content flex flex-col hover:cursor-auto content-menu sticky top-0'>
@@ -35,7 +49,30 @@ const ContentMenu = ({ children }: ContentMenuProps) => {
           </button>
         </div>
       </div>
-      {children}
+      {notes ? (
+        <ul>
+          {notes.map((note) => (
+            <li key={note.id.toString()}>
+              <NavLink
+                onClick={(e) => handleClick(e, note.id.toString())}
+                className={({ isActive }) =>
+                  classNames('block p-5 visible', { 'bg-base-200': isActive })
+                }
+                to={`/all-notes/${note.id}`}
+              >
+                {note.title}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className='flex flex-col flex-auto justify-center items-center gap-2 h-full'>
+          <Icons.LightBulb size={32} />
+          <span className='text-sm text-primary hover:cursor-pointer'>
+            Create your first note
+          </span>
+        </div>
+      )}
     </div>
   );
 };

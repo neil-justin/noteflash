@@ -12,6 +12,8 @@ interface NoteReqBody {
   archived: boolean;
 }
 
+interface UpdateNoteReqBody extends Partial<NoteReqBody> {}
+
 interface NoteDoc extends Document, Omit<NoteReqBody, 'content'> {
   id: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId;
@@ -21,4 +23,16 @@ interface NoteDoc extends Document, Omit<NoteReqBody, 'content'> {
   updatedAt: Date;
 }
 
-export type { UserCredential, NoteDoc, NoteReqBody };
+interface NoteTitleDoc extends Document {
+  id: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
+  title: 'string';
+}
+
+export type {
+  UserCredential,
+  NoteDoc,
+  NoteReqBody,
+  UpdateNoteReqBody,
+  NoteTitleDoc,
+};
