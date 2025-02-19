@@ -395,7 +395,7 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
           </button>
         </div>
         <div
-          className='tooltip tooltip-bottom ml-auto'
+          className='tooltip tooltip-bottom ml-auto visible'
           data-tip='More Actions'
         >
           {/* <button className='btn btn-ghost'>
