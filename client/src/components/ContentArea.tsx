@@ -4,11 +4,13 @@ import Tiptap from '../app/Tiptap';
 
 interface ContentAreaProps {
   refetchTitles: () => Promise<QueryObserverResult<NoteTitleDoc[], Error>>;
+  updateNoteId: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   activeNote: NoteDoc | undefined;
 }
 
 const ContentArea = ({
   refetchTitles,
+  updateNoteId,
   activeNote,
 }: ContentAreaProps) => {
   if (!activeNote) {
@@ -20,6 +22,7 @@ const ContentArea = ({
       <Tiptap
         refetchTitles={refetchTitles}
         activeNote={activeNote}
+        updateNoteId={updateNoteId}
       />
     </div>
   );

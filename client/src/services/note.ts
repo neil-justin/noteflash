@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { NoteDoc, NoteTitleDoc } from '../../../shared-types';
+import {
+  NoteDoc,
+  NoteTitleDoc,
+  UpdateNoteReqBody,
+} from '../../../shared-types';
 import mongoose from 'mongoose';
 
 const baseUrl = '/api/notes';
@@ -8,18 +12,15 @@ const getManyTitles = async (): Promise<NoteTitleDoc[]> => {
   return (await axios.get(`${baseUrl}/titles`)).data;
 };
 
-const updateNote = async (note: {
-  id: mongoose.Types.ObjectId;
-  title?: string;
-  content?: string;
-  pinned?: boolean;
-}): Promise<NoteDoc> => {
+const updateNote = async (
+  note: UpdateNoteReqBody & { id: mongoose.Types.ObjectId }
+): Promise<NoteDoc> => {
   const { id, ...noteReqBody } = note;
 
   return (await axios.put(`${baseUrl}/${id}`, noteReqBody)).data;
 };
 
-const getNoteBy = async (id: string | undefined): Promise<NoteDoc> => {
+const getNoteBy = async (id: string | undefined | null): Promise<NoteDoc> => {
   return (await axios.get(`${baseUrl}/${id}`)).data;
 };
 

@@ -10,7 +10,7 @@ import mongoose from 'mongoose';
 
 interface ContentMenuProps {
   notes: NoteTitleDoc[] | undefined;
-  updateNoteId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  updateNoteId: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   refetchTitles: () => Promise<QueryObserverResult<NoteTitleDoc[], Error>>;
 }
 
@@ -91,13 +91,14 @@ const ContentMenu = ({
       {notes ? (
         <ul>
           {notes
-            // descendingly sort
+            // descendingly sort by modified date
             .sort(
               (noteA, noteB) =>
                 new Date(noteB.updatedAt).getTime() -
                 new Date(noteA.updatedAt).getTime()
             )
             .sort((noteA, noteB) => Number(noteB.pinned) - Number(noteA.pinned))
+            .filter((note) => !note.archived)
             .map((note) => (
               <li key={note.id.toString()}>
                 <NavLink

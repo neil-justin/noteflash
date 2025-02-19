@@ -32,6 +32,7 @@ interface NoteTitleDoc extends Document {
   title: string;
   updatedAt: Date;
   pinned: boolean;
+  archived: boolean;
 }
 
 export type {

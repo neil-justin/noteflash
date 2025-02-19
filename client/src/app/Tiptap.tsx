@@ -14,10 +14,11 @@ import { NoteDoc, NoteTitleDoc } from '../../../shared-types';
 
 interface TiptapProps {
   refetchTitles: () => Promise<QueryObserverResult<NoteTitleDoc[], Error>>;
+  updateNoteId: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   activeNote: NoteDoc;
 }
 
-const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
+const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
   const mutation = useMutation({ mutationFn: noteService.updateNote });
   const editor = useEditor({
     onUpdate({ editor }) {
@@ -167,6 +168,23 @@ const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
         pinned: !activeNote.pinned,
       },
       { onSuccess: () => refetchTitles() }
+    );
+  };
+
+  const handleArchiveClick = () => {
+    mutation.mutate(
+      {
+        id: activeNote.id,
+        archived: true,
+        // if user archive, we also need to unpin note
+        pinned: false,
+      },
+      {
+        onSuccess: () => {
+          updateNoteId(null);
+          refetchTitles();
+        },
+      }
     );
   };
 
@@ -354,7 +372,7 @@ const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
                 </button>
               </li>
               <li>
-                <a>Archive note</a>
+                <button onClick={handleArchiveClick}>Archive note</button>
               </li>
               <li>
                 <a className='text-error'>Move to trash</a>

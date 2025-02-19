@@ -6,10 +6,12 @@ import noteService from '../../services/note';
 import { useState } from 'react';
 
 const AllNotes = () => {
-  const [noteId, setNoteId] = useState<string | undefined>();
+  const [noteId, setNoteId] = useState<string | undefined | null>();
   const { data: activeNote } = useQuery({
     queryKey: ['activeNote', noteId],
     queryFn: () => {
+      if (!noteId) return;
+
       return noteService.getNoteBy(noteId);
     },
     enabled: !!noteId,
@@ -30,6 +32,7 @@ const AllNotes = () => {
       <ContentArea
         refetchTitles={refetch}
         activeNote={activeNote}
+        updateNoteId={setNoteId}
       />
     </>
   );
