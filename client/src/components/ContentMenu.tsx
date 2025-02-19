@@ -90,11 +90,12 @@ const ContentMenu = ({
                 <NavLink
                   onClick={(e) => handleNoteClick(e, note.id.toString())}
                   className={({ isActive }) =>
-                    classNames('block p-5 visible', { 'bg-base-200': isActive })
+                    classNames('flex flex-col p-5 visible', { 'bg-base-200': isActive })
                   }
                   to={`/all-notes/${note.id}`}
                 >
                   {note.title}
+                  <span className='text-xs w-fit self-end'>{new Date(note.updatedAt).toDateString()}</span>
                 </NavLink>
               </li>
             ))}
