@@ -188,6 +188,25 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
     );
   };
 
+  const handleTrashNoteClick = () => {
+    mutation.mutate(
+      {
+        id: activeNote.id,
+        trashedAt: new Date(),
+        // setting trashedAt field will schedule note for deletion and,
+        // move note to trash folder
+        // unpinning note is also needed
+        pinned: false,
+      },
+      {
+        onSuccess: () => {
+          updateNoteId(null);
+          refetchTitles();
+        },
+      }
+    );
+  };
+
   const handleSetParagraph = () => {
     editor.chain().focus().setParagraph().run();
     updateMenuDropdownText('P');
@@ -375,7 +394,12 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
                 <button onClick={handleArchiveClick}>Archive note</button>
               </li>
               <li>
-                <a className='text-error'>Move to trash</a>
+                <button
+                  className='text-error'
+                  onClick={handleTrashNoteClick}
+                >
+                  Move to trash
+                </button>
               </li>
             </ul>
           </div>

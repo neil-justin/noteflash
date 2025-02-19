@@ -73,6 +73,7 @@ const updateNote = async (
       }),
       ...(note.pinned !== undefined && { pinned: note.pinned }),
       ...(note.archived !== undefined && { archived: note.archived }),
+      ...(note.trashedAt !== undefined && { trashedAt: note.trashedAt }),
     },
     { new: true }
   )) as NoteDoc;
@@ -90,7 +91,7 @@ const getManyTitles = async (): Promise<NoteTitleDoc[]> => {
   })) as UserDoc;
   return await Note.find(
     { userId: user.id },
-    { userId: 1, title: 1, updatedAt: 1, pinned: 1, archived: 1 }
+    { userId: 1, title: 1, updatedAt: 1, pinned: 1, archived: 1, trashedAt: 1 }
   );
 };
 

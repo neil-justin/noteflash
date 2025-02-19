@@ -14,6 +14,7 @@ interface NoteReqBody {
 
 interface UpdateNoteReqBody extends Partial<NoteReqBody> {
   pinned?: boolean;
+  trashedAt?: Date;
 }
 
 interface NoteDoc extends Document, Omit<NoteReqBody, 'content'> {
@@ -33,6 +34,7 @@ interface NoteTitleDoc extends Document {
   updatedAt: Date;
   pinned: boolean;
   archived: boolean;
+  trashedAt?: Date | null;
 }
 
 export type {

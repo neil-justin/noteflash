@@ -91,14 +91,15 @@ const ContentMenu = ({
       {notes ? (
         <ul>
           {notes
-            // descendingly sort by modified date
+          // sort descendingly by updatedAt field
             .sort(
               (noteA, noteB) =>
                 new Date(noteB.updatedAt).getTime() -
                 new Date(noteA.updatedAt).getTime()
             )
+            // descendingly by pinned field
             .sort((noteA, noteB) => Number(noteB.pinned) - Number(noteA.pinned))
-            .filter((note) => !note.archived)
+            .filter((note) => !note.archived && !note.trashedAt)
             .map((note) => (
               <li key={note.id.toString()}>
                 <NavLink
