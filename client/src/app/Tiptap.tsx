@@ -19,32 +19,32 @@ interface TiptapProps {
 }
 
 const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
+  const [showMenu, setShowMenu] = useState(true);
   const mutation = useMutation({ mutationFn: noteService.updateNote });
   const editor = useEditor({
     onUpdate({ editor }) {
-      if (editor.isFocused) {
-        const [noteTitleJSON, ...noteContentJSON] = editor.getJSON()
-          .content as JSONContent[];
-        const noteTitle = generateHTML(noteTitleJSON, [StarterKit]);
-        const noteContent = generateHTML(
-          { type: 'doc', content: noteContentJSON },
-          [StarterKit, Underline, Link]
-        );
-        const prevNoteContent = activeNote.content
-          ? generateHTML(activeNote.content, [StarterKit, Underline, Link])
-          : '';
-        const isTitleChanged = activeNote.title !== noteTitle;
-        const isContentChanged = prevNoteContent !== noteContent;
-        if (isTitleChanged || isContentChanged) {
-          mutation.mutate({
-            id: activeNote.id,
-            ...(isTitleChanged && { title: noteTitle }),
-            ...(isContentChanged && { content: noteContent }),
-          });
-
-          if (isTitleChanged) refetchTitles();
-        }
-      }
+      // if (editor.isFocused) {
+      //   const [noteTitleJSON, ...noteContentJSON] = editor.getJSON()
+      //     .content as JSONContent[];
+      //   const noteTitle = generateHTML(noteTitleJSON, [StarterKit]);
+      //   const noteContent = generateHTML(
+      //     { type: 'doc', content: noteContentJSON },
+      //     [StarterKit, Underline, Link]
+      //   );
+      //   const prevNoteContent = activeNote.content
+      //     ? generateHTML(activeNote.content, [StarterKit, Underline, Link])
+      //     : '';
+      //   const isTitleChanged = activeNote.title !== noteTitle;
+      //   const isContentChanged = prevNoteContent !== noteContent;
+      //   if (isTitleChanged || isContentChanged) {
+      //     mutation.mutate({
+      //       id: activeNote.id,
+      //       ...(isTitleChanged && { title: noteTitle }),
+      //       ...(isContentChanged && { content: noteContent }),
+      //     });
+      //     if (isTitleChanged) refetchTitles();
+      //   }
+      // }
     },
     editorProps: {
       handleKeyDown: (_view, event) => {
@@ -112,18 +112,28 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
       }
     }
 
+    const editorElem = document.querySelector('.tiptap');
+
     const handleMouseDown = (e: Event) => {
       const target = e.target;
 
       // if there is a vaid target in editor and the clicked target is not a br (breakline)
-      if (target && !((target as HTMLElement).tagName === 'BR')) {
-        updateMenuDropdownText(
-          getValidAncestorTagName(e.target as HTMLElement) as string
-        );
+      if (target) {
+        // if target element is the title
+        if (editorElem?.firstElementChild === target) {
+          // hide menu
+          setShowMenu(false);
+        } else {
+          setShowMenu(true);
+        }
+
+        if (!((target as HTMLElement).tagName === 'BR')) {
+          updateMenuDropdownText(
+            getValidAncestorTagName(e.target as HTMLElement) as string
+          );
+        }
       }
     };
-
-    const editorElem = document.querySelector('.tiptap');
 
     editorElem?.addEventListener('mousedown', handleMouseDown);
 
@@ -219,7 +229,12 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
 
   return (
     <>
-      <div className='flex items-center gap-1 px-5 shadow-sm'>
+      <div
+        className={classNames('flex items-center gap-1 px-5 shadow-sm', {
+          visible: showMenu,
+          invisible: !showMenu,
+        })}
+      >
         <div
           className='tooltip tooltip-bottom'
           data-tip='Undo'
