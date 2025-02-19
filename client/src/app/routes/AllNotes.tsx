@@ -22,7 +22,7 @@ const AllNotes = () => {
   });
 
   return (
-    <>
+    <div className='grid sm:grid-cols-[40%_60%] lg:grid-cols-[30%_70%] h-screen'>
       <AppSidebar />
       <ContentMenu
         notes={notes}
@@ -34,7 +34,7 @@ const AllNotes = () => {
         activeNote={activeNote}
         updateNoteId={setNoteId}
       />
-    </>
+    </div>
   );
 };
 
