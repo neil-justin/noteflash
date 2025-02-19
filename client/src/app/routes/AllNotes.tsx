@@ -4,9 +4,13 @@ import ContentMenu from '../../components/ContentMenu';
 import { useQuery } from '@tanstack/react-query';
 import noteService from '../../services/note';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const AllNotes = () => {
-  const [noteId, setNoteId] = useState<string | undefined | null>();
+  const [noteId, setNoteId] = useState<string | undefined | null>(
+    // Possibly a Note ID
+    useLocation().pathname.split('/')[2]
+  );
   const { data: notes, refetch } = useQuery({
     queryKey: ['titles'],
     queryFn: noteService.getManyTitles,
@@ -14,6 +18,7 @@ const AllNotes = () => {
   const { data: activeNote } = useQuery({
     queryKey: ['activeNote', noteId, notes],
     queryFn: () => {
+      // !noteId will also return true if noteId is an empty string ''
       if (!noteId) return;
 
       return noteService.getNoteBy(noteId);
