@@ -23,28 +23,28 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
   const mutation = useMutation({ mutationFn: noteService.updateNote });
   const editor = useEditor({
     onUpdate({ editor }) {
-      // if (editor.isFocused) {
-      //   const [noteTitleJSON, ...noteContentJSON] = editor.getJSON()
-      //     .content as JSONContent[];
-      //   const noteTitle = generateHTML(noteTitleJSON, [StarterKit]);
-      //   const noteContent = generateHTML(
-      //     { type: 'doc', content: noteContentJSON },
-      //     [StarterKit, Underline, Link]
-      //   );
-      //   const prevNoteContent = activeNote.content
-      //     ? generateHTML(activeNote.content, [StarterKit, Underline, Link])
-      //     : '';
-      //   const isTitleChanged = activeNote.title !== noteTitle;
-      //   const isContentChanged = prevNoteContent !== noteContent;
-      //   if (isTitleChanged || isContentChanged) {
-      //     mutation.mutate({
-      //       id: activeNote.id,
-      //       ...(isTitleChanged && { title: noteTitle }),
-      //       ...(isContentChanged && { content: noteContent }),
-      //     });
-      //     if (isTitleChanged) refetchTitles();
-      //   }
-      // }
+      if (editor.isFocused) {
+        const [noteTitleJSON, ...noteContentJSON] = editor.getJSON()
+          .content as JSONContent[];
+        const noteTitle = generateHTML(noteTitleJSON, [StarterKit]);
+        const noteContent = generateHTML(
+          { type: 'doc', content: noteContentJSON },
+          [StarterKit, Underline, Link]
+        );
+        const prevNoteContent = activeNote.content
+          ? generateHTML(activeNote.content, [StarterKit, Underline, Link])
+          : '';
+        const isTitleChanged = activeNote.title !== noteTitle;
+        const isContentChanged = prevNoteContent !== noteContent;
+        if (isTitleChanged || isContentChanged) {
+          mutation.mutate({
+            id: activeNote.id,
+            ...(isTitleChanged && { title: noteTitle }),
+            ...(isContentChanged && { content: noteContent }),
+          });
+          if (isTitleChanged) refetchTitles();
+        }
+      }
     },
     editorProps: {
       handleKeyDown: (_view, event) => {
