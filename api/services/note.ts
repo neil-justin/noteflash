@@ -64,11 +64,12 @@ const updateNote = async (
     id,
     {
       // if note.title exists, update title field
+      // same goes for the next in line
       ...(note.title && { title: note.title }),
-      // if note.content (HTML) exists, generate JSON from it
       ...(note.content && {
         content: generateJSON(note.content, [StarterKit, Link, Underline]),
       }),
+      ...(note.pinned && { pinned: note.pinned }),
     },
     { new: true }
   )) as NoteDoc;
@@ -86,7 +87,7 @@ const getManyTitles = async (): Promise<NoteTitleDoc[]> => {
   })) as UserDoc;
   return await Note.find(
     { userId: user.id },
-    { userId: 1, title: 1, updatedAt: 1 }
+    { userId: 1, title: 1, updatedAt: 1, pinned: 1 }
   );
 };
 

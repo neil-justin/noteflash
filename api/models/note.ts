@@ -16,6 +16,7 @@ const noteSchema = new mongoose.Schema(
     },
     archived: { type: Boolean, default: false },
     trashedAt: { type: Date, default: undefined },
+    pinned: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

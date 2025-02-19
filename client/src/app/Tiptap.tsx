@@ -8,14 +8,13 @@ import { JSONContent, mergeAttributes, generateHTML } from '@tiptap/core';
 import classNames from 'classnames';
 import * as Icons from '../icons';
 import { useEffect, useState } from 'react';
-import { ActiveNote } from '../types';
 import { QueryObserverResult, useMutation } from '@tanstack/react-query';
 import noteService from '../services/note';
-import { NoteTitleDoc } from '../../../shared-types';
+import { NoteDoc, NoteTitleDoc } from '../../../shared-types';
 
 interface TiptapProps {
   refetchTitles: () => Promise<QueryObserverResult<NoteTitleDoc[], Error>>;
-  activeNote: ActiveNote;
+  activeNote: NoteDoc;
 }
 
 const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
@@ -159,6 +158,16 @@ const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
     }
 
     return target.tagName;
+  };
+
+  const handleTogglePinClick = () => {
+    mutation.mutate(
+      {
+        id: activeNote.id,
+        pinned: !activeNote.pinned,
+      },
+      { onSuccess: () => refetchTitles() }
+    );
   };
 
   const handleSetParagraph = () => {
@@ -340,7 +349,9 @@ const Tiptap = ({ refetchTitles, activeNote }: TiptapProps) => {
               className='dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 mt-2 shadow-md'
             >
               <li>
-                <a>Pin note</a>
+                <button onClick={handleTogglePinClick}>
+                  {activeNote.pinned ? 'Unpin' : 'Pin'} note
+                </button>
               </li>
               <li>
                 <a>Archive note</a>

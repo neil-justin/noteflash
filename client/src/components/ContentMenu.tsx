@@ -18,6 +18,9 @@ const ContentMenu = ({
   updateNoteId,
   refetchTitles,
 }: ContentMenuProps) => {
+  if (notes) {
+    console.log(notes);
+  }
   const activeMenuItem = capitalCase(useLocation().pathname.split('/')[1]);
   const activeNoteId = useLocation().pathname.split('/')[2];
   const navigate = useNavigate();
@@ -85,17 +88,23 @@ const ContentMenu = ({
                 new Date(noteB.updatedAt).getTime() -
                 new Date(noteA.updatedAt).getTime()
             )
+            .sort((noteA, noteB) => Number(noteB.pinned) - Number(noteA.pinned))
             .map((note) => (
               <li key={note.id.toString()}>
                 <NavLink
                   onClick={(e) => handleNoteClick(e, note.id.toString())}
                   className={({ isActive }) =>
-                    classNames('flex flex-col p-5 visible', { 'bg-base-200': isActive })
+                    classNames('flex flex-col p-5 visible', {
+                      'bg-base-200': isActive,
+                    })
                   }
                   to={`/all-notes/${note.id}`}
                 >
                   {note.title}
-                  <span className='text-xs w-fit self-end'>{new Date(note.updatedAt).toDateString()}</span>
+                  <span className='text-xs w-fit self-end'>
+                    {new Date(note.updatedAt).toDateString()}
+                  </span>
+                  <span>{note.pinned ? 'Pinned' : 'Unpinned'}</span>
                 </NavLink>
               </li>
             ))}

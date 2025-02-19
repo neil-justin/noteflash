@@ -12,7 +12,9 @@ interface NoteReqBody {
   archived: boolean;
 }
 
-interface UpdateNoteReqBody extends Partial<NoteReqBody> {}
+interface UpdateNoteReqBody extends Partial<NoteReqBody> {
+  pinned?: boolean;
+}
 
 interface NoteDoc extends Document, Omit<NoteReqBody, 'content'> {
   id: mongoose.Types.ObjectId;
@@ -21,13 +23,15 @@ interface NoteDoc extends Document, Omit<NoteReqBody, 'content'> {
   trashedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
+  pinned: boolean;
 }
 
 interface NoteTitleDoc extends Document {
   id: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId;
-  title: 'string';
+  title: string;
   updatedAt: Date;
+  pinned: boolean;
 }
 
 export type {

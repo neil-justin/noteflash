@@ -12,6 +12,7 @@ const updateNote = async (note: {
   id: mongoose.Types.ObjectId;
   title?: string;
   content?: string;
+  pinned?: boolean;
 }): Promise<NoteDoc> => {
   const { id, ...noteReqBody } = note;
 
