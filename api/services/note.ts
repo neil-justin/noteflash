@@ -84,7 +84,10 @@ const getManyTitles = async (): Promise<NoteTitleDoc[]> => {
   const user = (await User.findOne({
     email: currentUser.email,
   })) as UserDoc;
-  return await Note.find({ userId: user.id }, { userId: 1, title: 1 });
+  return await Note.find(
+    { userId: user.id },
+    { userId: 1, title: 1, updatedAt: 1 }
+  );
 };
 
 export default {

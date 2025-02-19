@@ -27,7 +27,7 @@ const ContentMenu = ({
       // this will trigger refetch for 'activeNote' queryKey and displays
       // content in the editor
       updateNoteId(data.id.toString());
-      // this will refetch titles to display updated list 
+      // this will refetch titles to display updated list
       refetchTitles();
       navigate(`/all-notes/${data.id}`);
     },
@@ -78,19 +78,26 @@ const ContentMenu = ({
       </div>
       {notes ? (
         <ul>
-          {notes.map((note) => (
-            <li key={note.id.toString()}>
-              <NavLink
-                onClick={(e) => handleNoteClick(e, note.id.toString())}
-                className={({ isActive }) =>
-                  classNames('block p-5 visible', { 'bg-base-200': isActive })
-                }
-                to={`/all-notes/${note.id}`}
-              >
-                {note.title}
-              </NavLink>
-            </li>
-          ))}
+          {notes
+            // descendingly sort
+            .sort(
+              (noteA, noteB) =>
+                new Date(noteB.updatedAt).getTime() -
+                new Date(noteA.updatedAt).getTime()
+            )
+            .map((note) => (
+              <li key={note.id.toString()}>
+                <NavLink
+                  onClick={(e) => handleNoteClick(e, note.id.toString())}
+                  className={({ isActive }) =>
+                    classNames('block p-5 visible', { 'bg-base-200': isActive })
+                  }
+                  to={`/all-notes/${note.id}`}
+                >
+                  {note.title}
+                </NavLink>
+              </li>
+            ))}
         </ul>
       ) : (
         <div className='flex flex-col flex-auto justify-center items-center gap-2 h-full'>

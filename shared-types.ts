@@ -27,6 +27,7 @@ interface NoteTitleDoc extends Document {
   id: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId;
   title: 'string';
+  updatedAt: Date;
 }
 
 export type {
