@@ -91,7 +91,7 @@ const ContentMenu = ({
       {notes ? (
         <ul>
           {notes
-          // sort descendingly by updatedAt field
+            // sort descendingly by updatedAt field
             .sort(
               (noteA, noteB) =>
                 new Date(noteB.updatedAt).getTime() -

@@ -7,18 +7,18 @@ import { useState } from 'react';
 
 const AllNotes = () => {
   const [noteId, setNoteId] = useState<string | undefined | null>();
+  const { data: notes, refetch } = useQuery({
+    queryKey: ['titles'],
+    queryFn: noteService.getManyTitles,
+  });
   const { data: activeNote } = useQuery({
-    queryKey: ['activeNote', noteId],
+    queryKey: ['activeNote', noteId, notes],
     queryFn: () => {
       if (!noteId) return;
 
       return noteService.getNoteBy(noteId);
     },
     enabled: !!noteId,
-  });
-  const { data: notes, refetch } = useQuery({
-    queryKey: ['titles'],
-    queryFn: noteService.getManyTitles,
   });
 
   return (

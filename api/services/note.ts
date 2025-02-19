@@ -60,8 +60,6 @@ const updateNote = async (
     throw new FirebaseError('auth/user-not-found', 'User not found');
   }
 
-  console.log('note', note);
-
   return (await Note.findByIdAndUpdate(
     id,
     {

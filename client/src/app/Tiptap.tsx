@@ -180,12 +180,17 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
   };
 
   const handleTogglePinClick = () => {
+    console.log('prev', activeNote.pinned, 'now', !activeNote.pinned);
     mutation.mutate(
       {
         id: activeNote.id,
         pinned: !activeNote.pinned,
       },
-      { onSuccess: () => refetchTitles() }
+      {
+        onSuccess: () => {
+          refetchTitles();
+        },
+      }
     );
   };
 
