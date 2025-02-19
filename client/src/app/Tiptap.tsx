@@ -48,16 +48,10 @@ const Tiptap = ({ refetchTitles, updateNoteId, activeNote }: TiptapProps) => {
     },
     editorProps: {
       handleKeyDown: (_view, event) => {
-        const editorElem = document.querySelector('.tiptap');
-
-        // Toggles show menu when user presses "Enter" key at the end of note title
-        // and "Backspace" key at the start of node below note title
-        if (event.target === editorElem) {
-          setShowMenu(!showMenu);
-        }
-
         // this would remove all marks when user presses Enter at the end of a line
         if (event.key === 'Enter') {
+          // this will make Fixed Menu visible except when the cursor is inside note title
+          setShowMenu(true);
           // editor.commands.unsetAllMarks() doesn't work as expected
           // below is an alternative
           editor.isActive('bold') && editor.commands.unsetBold();
